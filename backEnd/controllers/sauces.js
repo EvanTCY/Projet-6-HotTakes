@@ -12,7 +12,7 @@ exports.getAllSauces = (req, res, next) => {
     .then(sauces => res.status(200).json(sauces))
     .catch(error => res.status(400).json({error}));
 };
-// chercher une les sauce en particulier
+// chercher une sauce en particulier
 exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
     .then(sauce => res.status(201).json(sauce))
@@ -102,28 +102,26 @@ exports.likeSauce = (req, res, next) => {
         switch (like) {
           case 1:
             sauce.usersLiked.push(userId); // Ajoute l'ID de l'utilisateur au tableau des likes
-            sauce.likes += parseInt(sauce.usersLiked.length);
+            sauce.likes += 1;
             break;
           case 0:
             if (sauce.usersLiked.includes(userId)) { // Vérifie si l'utilisateur a déjà liké la sauce
               sauce.usersLiked.pull(userId); // Retire l'ID de l'utilisateur du tableau des likes
+              sauce.likes -= 1; // Diminue le nombre total de likes
             }
             if (sauce.usersDisliked.includes(userId)) { // Vérifie si l'utilisateur a déjà disliké la sauce
               sauce.usersDisliked.pull(userId); // Retire l'ID de l'utilisateur du tableau des dislikes
+              sauce.dislikes -= 1; // Diminue le nombre total de dislikes
             }
             break;
           case -1:
             sauce.usersDisliked.push(userId); // Ajoute l'ID de l'utilisateur au tableau des dislikes
-            sauce.dislikes += parseInt(sauce.usersDisliked.length);
+            sauce.dislikes += 1;
             break;
           default:
             return res.status(400).json({ error: "Valeur de like invalide" }); // Retourne une erreur 400 si la valeur de like n'est pas valide
         }
-
-        // Mettre à jour le nombre total de likes et de dislikes
         
-        
-
         sauce.save() // Sauvegarde les modifications de la sauce dans la base de données
           .then(() => {
             res.status(200).json({ message: "Sauce modifié" }); // Retourne une réponse 200 avec un message de confirmation
@@ -137,10 +135,7 @@ exports.likeSauce = (req, res, next) => {
       });
   };
 
-// POURQUOI NE TROUVE PAS LA SAUCE (ERREUR 404)
-// POURQUOI LIKE = 1 ET DISLIKE = -1
-
-/******************* CREATE *******************/
+/******************* UPDATE *******************/
 
 
 /******************* DELETE *******************/

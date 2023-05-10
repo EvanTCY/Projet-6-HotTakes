@@ -1,4 +1,3 @@
-// déclaration d'express pour utiliser Router()
 const express = require('express');
 const router = express.Router();
 

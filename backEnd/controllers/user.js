@@ -1,15 +1,11 @@
-// permet de hacher leS mdp pour leS sécuriser
+// permet de hacher les mdp pour les sécuriser
 const bcrypt = require('bcrypt');
 
 // permet d'accéder au schéma de user 
 const User = require('../models/User');
 
-/*
-permet de de vérifier l'identité des utilisateurs.
-Le token JWT est généré pour permettre à l'utilisateur de rester 
-authentifié pendant une certaine période de temps sans avoir à envoyer 
-ses identifiants à chaque requête vers le serveur.
-*/
+
+// permet de de vérifier l'identité des utilisateurs.
 const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res, next) => {

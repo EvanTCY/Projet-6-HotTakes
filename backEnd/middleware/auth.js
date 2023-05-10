@@ -1,8 +1,3 @@
-/*Ce code exporte une fonction middleware qui vérifie si 
-un token JWT est présent dans les en-têtes de la requête 
-et si ce token est valide.*/
-
-
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
